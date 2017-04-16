@@ -33,16 +33,12 @@ export class PlaceProfile extends Component {
   }
 
   getPlace() {
-    console.log('props!', this.props)
     getPlace(this.props.place)
       .then(data => {
-        console.log('data', data);
         const list = data.favorites.map(favorite => {
-          return {
-            place: {
-              name: favorite.name
-            }
-          };
+          favorite['person'] = favorite.user;
+          favorite['place'] = data.place;
+          return favorite;
         });
         const feed = data.feed.map(item => {
           item['place'] = data.place;
@@ -51,9 +47,8 @@ export class PlaceProfile extends Component {
         })
         this.setState({
           markers: [data.place],
-          favorites: data.favorites,
-          favoritesList: list,
-          feed: data.feed,
+          favorites: list,
+          feed: feed,
           place: data.place,
           photos: data.images,
           feedType: 'feed'
@@ -64,7 +59,7 @@ export class PlaceProfile extends Component {
 
   render() {
     const { favorites, favoritesList, feed, feedType, markers, place, selectedFilter } = this.state;
-
+    console.log('this state', this.state)
     return (
       <View style={styles.container}>
         <Map markers={markers} styles={styles.mapContainer} />
@@ -82,7 +77,7 @@ export class PlaceProfile extends Component {
               <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('feed')}>
                 <Text style={selectedFilter === 'feed' ? styles.selectedFilter : styles.filters}>FEED</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('favoritesList')}>
+              <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('favorites')}>
                 <Text style={selectedFilter === 'favorites' ? styles.selectedFilter : styles.filters}>FAVORITES</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('photos')}>
@@ -91,7 +86,7 @@ export class PlaceProfile extends Component {
             </View>
             <View style={styles.feed}>
                {(feedType === 'feed') && <Feed showButtons={true} feed={feed} />}
-               {(feedType === 'likes') && <Feed feed={favoritesList} />}
+               {(feedType === 'favorites') && <Feed showButtons={false} feed={favorites} />}
                {(feedType === 'photos') && <ImageFeed feed={photos} />}
              </View>
           </View>
