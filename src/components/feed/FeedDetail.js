@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { AsyncStorage, ListView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { List, ListItem, Icon } from 'react-native-elements';
 
 import { createLike, beenThere } from '../../services/apiActions';
@@ -15,6 +15,17 @@ export class FeedDetail extends Component {
 
     this.handleLike = this.handleLike.bind(this);
     this.handleBeenThere = this.handleBeenThere.bind(this);
+    this.setCurrentUser = this.setCurrentUser.bind(this);
+  }
+
+  componentDidMount() {
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    AsyncStorage.getItem('user', (err, user) => {
+      this.setState({user: JSON.parse(user) });
+    });
   }
 
   handleLike(feed) {
@@ -34,38 +45,43 @@ export class FeedDetail extends Component {
   render() {
     const { feed } = this.props
     const { showHeart, showBeenThere } = this.state;
-    return (
-      <ListItem
-       roundAvatar
-       subtitle={
-         <View style={styles.subtitleView}>
-           <Text style={styles.titleStyle}>
-             {feed.user.first_name + ' '}
-             <Text style={styles.unBold}>
-               added
+    if (this.state.user === undefined) {
+      return (null);
+    } else {
+      console.log('user', this.state.user);
+      console.log('feed', feed);
+      return (
+        <ListItem
+         roundAvatar
+         subtitle={
+           <View style={styles.subtitleView}>
+             <Text style={styles.titleStyle}>
+               {feed.user.first_name + ' '}
+               <Text style={styles.unBold}>
+                 added
+               </Text>
+               {" " + feed.place.name}
              </Text>
-             {" " + feed.place.name}
-           </Text>
-           <Text style={styles.textComment}>
-             {feed.comment}
-           </Text>
-           {this.props.showButtons && <View style={styles.realSubTitle}>
-             <View style={styles.likeAndBeen}>
-               { !showHeart && <TouchableOpacity onPress={() => this.handleLike(feed)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity> }
-               { !showBeenThere && <TouchableOpacity onPress={() => this.handleBeenThere(feed)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity> }
-             </View>
-             <View style={styles.icons}>
-               { showHeart && <Icon name="favorite" color="red" /> }
-               { showBeenThere && <Icon name="place" color="red"/> }
-             </View>
-           </View>}
-         </View>
-       }
-       hideChevron={true}
-       avatar={{uri: feed.user.photo_url}}
-       avatarStyle={styles.avatarStyle}
-     />
-    );
+             <Text style={styles.textComment}>
+               {feed.comment}
+             </Text>
+             {this.props.showButtons && this.state.user.id !== feed.user.id && <View style={styles.realSubTitle}>
+               <View style={styles.likeAndBeen}>
+                 { !showHeart && <TouchableOpacity onPress={() => this.handleLike(feed)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity> }
+                 { !showBeenThere && <TouchableOpacity onPress={() => this.handleBeenThere(feed)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity> }
+               </View>
+               <View style={styles.icons}>
+                 { showHeart && <Icon name="favorite" color="red" /> }
+                 { showBeenThere && <Icon name="place" color="red"/> }
+               </View>
+             </View>}
+           </View>
+         }
+         hideChevron={true}
+         avatar={{uri: feed.user.photo_url}}
+         avatarStyle={styles.avatarStyle} />
+      );
+    }
   }
 }
 

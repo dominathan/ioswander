@@ -92,8 +92,6 @@ export class PlaceProfile extends Component {
             <View style={styles.feed}>
                {(feedType === 'feed') && <Feed showButtons={true} feed={feed} />}
                {(feedType === 'likes') && <Feed feed={favoritesList} />}
-             </View>
-             <View>
                {(feedType === 'photos') && <ImageFeed feed={photos} />}
              </View>
           </View>

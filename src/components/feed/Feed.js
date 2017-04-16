@@ -14,22 +14,21 @@ export class Feed extends Component {
       feed: ds.cloneWithRows(props.feed)
     };
     this.renderFeed = this.renderFeed.bind(this);
-
   }
 
   renderFeed(feed) {
     return (
-      <FeedDetail feed={feed} />
+      <FeedDetail showButtons={this.props.showButtons} feed={feed} />
     );
   }
 
   render() {
     return (
       <ListView
-       dataSource={this.state.feed}
-       renderRow={this.renderFeed}
-       renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-      />
+         dataSource={this.state.feed}
+         renderRow={this.renderFeed}
+         renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+        />
     );
   }
 }
