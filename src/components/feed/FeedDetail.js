@@ -48,8 +48,6 @@ export class FeedDetail extends Component {
     if (this.state.user === undefined) {
       return (null);
     } else {
-      console.log('user', this.state.user);
-      console.log('feed', feed);
       return (
         <ListItem
          roundAvatar
