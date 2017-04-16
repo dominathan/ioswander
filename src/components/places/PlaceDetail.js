@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
-
+import { Actions } from 'react-native-router-flux';
 
 export class PlaceDetail extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export class PlaceDetail extends Component {
   }
 
   goToPlace(place) {
-    console.log("JOURNEY")
+    Actions.placeProfile({place: place});
   }
 
   render() {

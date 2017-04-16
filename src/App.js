@@ -10,6 +10,7 @@ import SimpleDrawer from './SimpleDrawer';
 // Places
 import { GooglePlaces } from './components/places/GooglePlaces';
 import { MyPlaces } from './components/places/MyPlaces';
+import { PlaceProfile } from './components/places/PlaceProfile'
 
 import { Login } from './components/Login';
 import { Onboarding } from './components/onboarding/Onboarding';
@@ -87,7 +88,7 @@ class App extends Component {
       } else {
         return (
           <Router backButtonImage={this.state.backButton} navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
-            <Scene key='drawer' renderLeftButton={this.drawerButton} type="replace" component={SimpleDrawer} >
+            <Scene key='drawer' renderLeftButton={this.drawerButton} component={SimpleDrawer} >
               <Scene key='main' tabs={false}>
                 <Scene key='launch' >
                   <Scene key='login' component={Login} title="Login" hideNavBar initial />
@@ -100,6 +101,7 @@ class App extends Component {
                 <Scene key="settings" component={Settings} title="Settings" />
                 <Scene key="help" component={Help} title="Help" />
                 <Scene key="profile" component={Profile} title="Profile" />
+                <Scene key="placeProfile" component={PlaceProfile} title="Place" />
                 <Scene key="groups" component={Group} title="Groups" onRight={() => Actions.searchGroup()} rightTitle="Search" titleStyle={{ color: "#FFF" }} />
                 <Scene key="createGroup" component={CreateGroup} title="Create a Group" />
                 <Scene key='searchGroup' component={GroupSearch} title="Search for Groups" />

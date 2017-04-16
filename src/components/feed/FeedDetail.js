@@ -7,6 +7,7 @@ import { createLike, beenThere } from '../../services/apiActions';
 export class FeedDetail extends Component {
   constructor(props) {
     super(props);
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       showHeart: false,
       showBeenThere: false
@@ -48,7 +49,7 @@ export class FeedDetail extends Component {
            <Text style={styles.textComment}>
              {feed.comment}
            </Text>
-           <View style={styles.realSubTitle}>
+           {this.props.showButtons && <View style={styles.realSubTitle}>
              <View style={styles.likeAndBeen}>
                { !showHeart && <TouchableOpacity onPress={() => this.handleLike(feed)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity> }
                { !showBeenThere && <TouchableOpacity onPress={() => this.handleBeenThere(feed)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity> }
@@ -57,8 +58,7 @@ export class FeedDetail extends Component {
                { showHeart && <Icon name="favorite" color="red" /> }
                { showBeenThere && <Icon name="place" color="red"/> }
              </View>
-           </View>
-
+           </View>}
          </View>
        }
        hideChevron={true}
