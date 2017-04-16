@@ -20,6 +20,8 @@ const defaultPost = (subUrl, data) => {
        return
      }
      const parsedToken = JSON.parse(token);
+     console.log("DATA", data)
+     console.log("URL", subUrl)
      fetch(`${API_BASE}/${subUrl}`, {
        method: 'POST',
        headers: headers(parsedToken),
@@ -110,6 +112,7 @@ const updateUser = (user) => defaultPut(`users/${user.id}`, user);
 
 const createLike = (likeeLikorPlace) => defaultPost('notifications/like', likeeLikorPlace);
 const getLikes = () => defaultGet('notifications/likes');
+const beenThere = (placeId) => defaultPost('notifications/been_there', placeId);
 
 
 
@@ -143,5 +146,6 @@ export {
   acceptJoinGroupRequest,
   updateUser,
   createLike,
-  getLikes
+  getLikes,
+  beenThere
 };

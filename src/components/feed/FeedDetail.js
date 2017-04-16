@@ -1,0 +1,131 @@
+import React, { Component } from 'react';
+import { ListView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { List, ListItem, Icon } from 'react-native-elements';
+
+import { createLike, beenThere } from '../../services/apiActions';
+
+export class FeedDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showHeart: false,
+      showBeenThere: false
+    }
+
+    this.handleLike = this.handleLike.bind(this);
+    this.handleBeenThere = this.handleBeenThere.bind(this);
+  }
+
+  handleLike(feed) {
+    this.setState({showHeart: true})
+    createLike({likee: feed.user.id, place_id: feed.place.id})
+      .then(data => console.log("CREATED?", data))
+      .catch(err => console.log("ERR CREATE LIKE", err))
+  }
+
+  handleBeenThere(feed) {
+    this.setState({showBeenThere: true})
+    beenThere({ place_id: feed.place.id })
+      .then((data) => console.log("I BEEN THERE", data))
+      .catch((err) => console.log("NO BEEN", err))
+  }
+
+  render() {
+    const { feed } = this.props
+    const { showHeart, showBeenThere } = this.state;
+    return (
+      <ListItem
+       roundAvatar
+       subtitle={
+         <View style={styles.subtitleView}>
+           <Text style={styles.titleStyle}>
+             {feed.user.first_name + ' '}
+             <Text style={styles.unBold}>
+               added
+             </Text>
+             {" " + feed.place.name}
+           </Text>
+           <Text style={styles.textComment}>
+             {feed.comment}
+           </Text>
+           <View style={styles.realSubTitle}>
+             <View style={styles.likeAndBeen}>
+               { !showHeart && <TouchableOpacity onPress={() => this.handleLike(feed)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity> }
+               { !showBeenThere && <TouchableOpacity onPress={() => this.handleBeenThere(feed)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity> }
+             </View>
+             <View style={styles.icons}>
+               { showHeart && <Icon name="favorite" color="red" /> }
+               { showBeenThere && <Icon name="place" color="red"/> }
+             </View>
+           </View>
+
+         </View>
+       }
+       hideChevron={true}
+       avatar={{uri: feed.user.photo_url}}
+       avatarStyle={styles.avatarStyle}
+     />
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 4,
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    marginLeft: 10,
+    height: 65
+  },
+  subtitleView: {
+    paddingLeft: 13,
+    width: '100%'
+  },
+  bold: {
+    fontWeight: '600'
+  },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
+  },
+  textComment: {
+    fontWeight: '100',
+    flexWrap: 'wrap',
+  },
+  likeAndBeen: {
+    flexDirection: 'row',
+    marginTop: 10,
+    alignSelf: 'flex-start'
+  },
+  likeButton: {
+    color: 'gray'
+  },
+  beenButton: {
+    color: 'gray',
+    marginLeft: 45
+  },
+  titleStyle: {
+    fontWeight: '600',
+  },
+  unBold: {
+    fontWeight: '300'
+  },
+  avatarStyle: {
+    width: 45,
+    height: 45,
+    borderRadius: 20,
+    marginLeft: '2%'
+  },
+  icons: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end'
+  },
+  realSubTitle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
+
+});

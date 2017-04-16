@@ -6,7 +6,7 @@ import MapView from 'react-native-maps';
 import { Icon } from 'react-native-elements';
 
 import { getPlaces, getFeed, getFriendFeed, getExpertFeed, getFilterPlaces } from '../services/apiActions';
-import { Feed } from './Feed';
+import { Feed } from './feed/Feed';
 import { Map } from './map/Map';
 import { PlaceList } from './places/PlaceList';
 import Filter from './places/Filter';

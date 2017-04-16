@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ListView } from 'react-native';
 
 import { getFriends, getUserFeed, getUserPlaces } from '../../services/apiActions';
-import { Feed } from '../Feed';
+import { Feed } from '../feed/Feed';
 import { Map } from '../map/Map';
 import ProfileStats from './ProfileStats';
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ListView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
-import { createLike } from '../services/apiActions';
+import { FeedDetail } from './FeedDetail';
 
 
 export class Feed extends Component {
@@ -14,46 +14,12 @@ export class Feed extends Component {
       feed: ds.cloneWithRows(props.feed)
     };
     this.renderFeed = this.renderFeed.bind(this);
-    this.handleLike = this.handleLike.bind(this);
-    this.handleBeenThere = this.handleBeenThere.bind(this);
-  }
-
-  handleLike(feed) {
-    createLike({likee: feed.user.id, place_id: feed.place.id})
-      .then(data => console.log("CREATED?", data))
-      .catch(err => console.log("ERR CREATE LIKE", err))
-  }
-
-  handleBeenThere(feed) {
 
   }
 
   renderFeed(feed) {
     return (
-      <ListItem
-       roundAvatar
-       subtitle={
-         <View style={styles.subtitleView}>
-           <Text style={styles.titleStyle}>
-             {feed.user.first_name + ' '}
-             <Text style={styles.unBold}>
-               added
-             </Text>
-             {" " + feed.place.name}
-           </Text>
-           <Text style={styles.textComment}>
-             {feed.comment}
-           </Text>
-           <View style={styles.likeAndBeen}>
-             <TouchableOpacity onPress={() => this.handleLike(feed)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity>
-             <TouchableOpacity onPress={() => this.handleBeenThere(feed)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity>
-           </View>
-         </View>
-       }
-       hideChevron={true}
-       avatar={{uri: feed.user.photo_url}}
-       avatarStyle={styles.avatarStyle}
-     />
+      <FeedDetail feed={feed} />
     );
   }
 
