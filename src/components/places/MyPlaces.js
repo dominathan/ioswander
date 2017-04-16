@@ -36,10 +36,6 @@ export class MyPlaces extends Component {
     })
   }
 
-  componentDidMount() {
-
-  }
-
   navigateToAddPlace() {
     Actions.googlePlaces();
   }

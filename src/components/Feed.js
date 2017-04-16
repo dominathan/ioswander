@@ -9,6 +9,7 @@ export class Feed extends Component {
 
   constructor(props) {
     super(props);
+    console.log('PROPS YO', props)
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       feed: ds.cloneWithRows(props.feed)
@@ -44,10 +45,10 @@ export class Feed extends Component {
            <Text style={styles.textComment}>
              {feed.comment}
            </Text>
-           <View style={styles.likeAndBeen}>
+           {this.props.showButtons && <View style={styles.likeAndBeen}>
              <TouchableOpacity onPress={() => this.handleLike(feed)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity>
              <TouchableOpacity onPress={() => this.handleBeenThere(feed)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity>
-           </View>
+           </View>}
          </View>
        }
        hideChevron={true}

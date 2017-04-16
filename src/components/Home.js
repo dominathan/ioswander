@@ -157,7 +157,7 @@ export class Home extends Component {
             <Text style={this.state.selectedFilter === 'filter' ? styles.selectedFilterButton : styles.filterButtonText}>FILTER</Text>
           </TouchableOpacity>
         </View>
-        {feedReady && selectedFilter === 'feed' && <Feed feed={feed} />}
+        {feedReady && selectedFilter === 'feed' && <Feed showButtons={true} feed={feed} />}
         {feedReady && selectedFilter === 'top' && <PlaceList places={places} />}
         {feedReady && selectedFilter === 'filter' && <Filter onPress={this.handleFilter} />}
         <TouchableOpacity style={styles.addPlaceButton}>
