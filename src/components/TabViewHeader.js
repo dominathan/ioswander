@@ -15,7 +15,7 @@ const TabViewHeader = (props) => {
 
     const goToProfile = () => {
       props.drawer.close();
-      Actions.profile({ person: props.user });
+      Actions.profile({ person: props.user, type: 'reset' });
     };
 
     return (
