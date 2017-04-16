@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ListView } from 'react
 
 import { getPlace } from '../../services/apiActions';
 import { Feed } from '../feed/Feed';
-// import { ImageFeed } from '../feed/ImageFeed';
+import { ImageFeed } from '../feed/ImageFeed';
 import { Map } from '../map/Map';
 import ProfileStats from '../profile/ProfileStats';
 
@@ -59,7 +59,7 @@ export class PlaceProfile extends Component {
   }
 
   render() {
-    const { favorites, favoritesList, feed, feedType, markers, place, selectedFilter } = this.state;
+    const { favorites, favoritesList, feed, feedType, markers, place, photos, selectedFilter } = this.state;
     console.log('this state', this.state)
     return (
       <View style={styles.container}>
@@ -88,7 +88,7 @@ export class PlaceProfile extends Component {
             <View style={styles.feed}>
               {(feedType === 'feed') && <Feed showButtons={true} feed={feed} />}
               {(feedType === 'favorites') && <Feed showButtons={false} feed={favorites} />}
-              // {(feedType === 'photos') && <ImageFeed feed={photos} />}
+              {(feedType === 'photos') && <ImageFeed images={photos} />}
             </View>
           </View>
         </View>

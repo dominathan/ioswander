@@ -10,7 +10,8 @@ import SimpleDrawer from './SimpleDrawer';
 // Places
 import { GooglePlaces } from './components/places/GooglePlaces';
 import { MyPlaces } from './components/places/MyPlaces';
-import { PlaceProfile } from './components/places/PlaceProfile'
+import { PlaceProfile } from './components/places/PlaceProfile';
+import { ImageDetail } from './components/feed/ImageDetail';
 
 import { Login } from './components/Login';
 import { Onboarding } from './components/onboarding/Onboarding';
@@ -109,6 +110,7 @@ class App extends Component {
                 <Scene key='addFriends' component={AddFriends} title='Add to Group' />
                 <Scene key='onboarding' component={Onboarding} title='Onboarding' hideNavBar />
                 <Scene key='profileInfo' component={ProfileInfo} title='Profile Info' />
+                <Scene key='imageDetail' component={ImageDetail} title='Image' />
               </Scene>
             </Scene>
           </Router>
