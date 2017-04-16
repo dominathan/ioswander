@@ -14,6 +14,10 @@ class SimpleDrawer extends Component {
     this.state = {
       user: {}
     }
+    this.setCurrentUser = this.setCurrentUser.bind(this);
+  }
+
+  componentDidMount() {
     this.setCurrentUser();
   }
 

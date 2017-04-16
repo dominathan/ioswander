@@ -10,12 +10,16 @@ export class ProfileInfo extends Component {
     this.state = {
       user: undefined
     }
+    this.setCurrentUser = this.setCurrentUser.bind(this);
+  }
+
+  componentDidMount() {
     this.setCurrentUser();
   }
 
   setCurrentUser() {
     AsyncStorage.getItem('user', (err, user) => {
-      this.setState({user: JSON.parse(user).user });
+      this.setState({user: JSON.parse(user) });
     });
   }
 
