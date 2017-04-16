@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Icon, Button } from 'react-native-elements';
+import { Icon, Button, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import { acceptJoinGroupRequest } from '../../services/apiActions';
@@ -8,82 +8,51 @@ import { acceptJoinGroupRequest } from '../../services/apiActions';
 export class LikeNotificationDetail extends Component {
   constructor(props) {
     super(props);
+    console.log("LIEK PROPS: ", props)
     this.state = {
     };
 
   }
 
   render() {
-    const { notification } = this.props;
+    const { like } = this.props;
     return (
-      <View style={styles.userItem}>
-        <Image source={{ uri: notification.photo_url || null }} style={styles.photo} />
-        <View style={styles.textContainer}>
-          <TouchableOpacity onPress={() => Actions.profile({user: notification})}>
-            <Text style={styles.text}>
-              {`${notification.first_name} ${notification.last_name}`}
-            </Text>
-            <Text style={styles.joinGroupText}>
-              would like to join your group.
-            </Text>
-
-          </TouchableOpacity>
-
-
-          <TouchableOpacity>
-            <Button
-              buttonStyle={styles.acceptJoinGroupRequestButton}
-              title="JOIN"
-              icon={{name: 'add', color: '#4296CC'}}
-              backgroundColor='#FFF'
-              color='#4296CC'
-              borderRadius={1}
-              onPress={}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <ListItem
+       roundAvatar
+       title={`${like.place.name}`}
+       titleStyle={styles.titleStyle}
+       subtitle={
+         <View style={styles.subtitleView}>
+          <Icon name="favorite" color='rgb(200,200,200)' size={18}/>
+           <Text style={styles.textComment}>
+             {`${like.user.first_name} ${like.user.last_name} liked this`}
+           </Text>
+         </View>
+       }
+       subtitleStyle={styles.subtitleStyle}
+       hideChevron={true}
+       avatar={{uri: like.user.photo_url}}
+       avatarStyle={styles.avatar}
+     />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  userItem: {
-    height: 45,
+  titleStyle: {
+    color: '#3c95cd',
+    fontWeight: '600'
+  },
+  subtitleView: {
+    marginLeft: '3%',
     flexDirection: 'row',
-    marginLeft: 15,
-    marginTop: 7,
-    marginBottom: 5,
-    alignItems: 'stretch',
-    justifyContent: 'space-between'
   },
-  textContainer: {
-    flex: 1,
-    marginLeft: 10,
-    marginTop: 3,
-    flexDirection: 'row',
-    alignSelf: 'flex-start'
+  textComment: {
+    color: 'rgb(200,200,200)',
+    fontWeight: '500',
+    marginLeft: '1%'
   },
-  text: {
-    fontSize: 16,
-    color: '#4296CC',
-    fontWeight: '500'
-  },
-  photo: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-  },
-  joinGroupText: {
-    color: "gray",
-    fontSize: 12,
-  },
-  acceptJoinGroupRequestButton: {
-    borderWidth: 1,
-    borderColor: '#4296CC',
-  },
-  acceptJoinPlus: {
-    color: '#4296CC',
-    backgroundColor: '#4296CC'
+  avatar: {
+    marginLeft: '2%'
   }
 });

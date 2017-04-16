@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ListView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
+import { createLike } from '../services/apiActions';
+
 
 export class Feed extends Component {
 
@@ -16,20 +18,35 @@ export class Feed extends Component {
     this.handleBeenThere = this.handleBeenThere.bind(this);
   }
 
+  handleLike(feed) {
+    createLike({likee: feed.user.id, place_id: feed.place.id})
+      .then(data => console.log("CREATED?", data))
+      .catch(err => console.log("ERR CREATE LIKE", err))
+  }
+
+  handleBeenThere(feed) {
+
+  }
+
   renderFeed(feed) {
     return (
       <ListItem
        roundAvatar
-       title={`${feed.user.first_name} added ${feed.place.name}`}
-       titleStyle={styles.titleStyle}
        subtitle={
          <View style={styles.subtitleView}>
+           <Text style={styles.titleStyle}>
+             {feed.user.first_name + ' '}
+             <Text style={styles.unBold}>
+               added
+             </Text>
+             {" " + feed.place.name}
+           </Text>
            <Text style={styles.textComment}>
              {feed.comment}
            </Text>
            <View style={styles.likeAndBeen}>
-             <TouchableOpacity onPress={() => this.handleLike(feed.place)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity>
-             <TouchableOpacity onPress={() => this.handleBeenThere(feed.place)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity>
+             <TouchableOpacity onPress={() => this.handleLike(feed)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity>
+             <TouchableOpacity onPress={() => this.handleBeenThere(feed)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity>
            </View>
          </View>
        }
@@ -38,14 +55,6 @@ export class Feed extends Component {
        avatarStyle={styles.avatarStyle}
      />
     );
-  }
-
-  handleLike() {
-
-  }
-
-  handleBeenThere() {
-    
   }
 
   render() {
@@ -68,20 +77,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     height: 65
   },
-  text: {
-    marginLeft: 14,
-    fontSize: 14,
-    flexWrap: 'wrap'
-  },
-  photo: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-  },
-  textContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around'
+  subtitleView: {
+    paddingLeft: 13,
+    width: '80%'
   },
   bold: {
     fontWeight: '600'
@@ -94,10 +92,8 @@ const styles = StyleSheet.create({
   textComment: {
     fontWeight: '100',
     flexWrap: 'wrap',
-    paddingLeft: 10
   },
   likeAndBeen: {
-    paddingLeft: 10,
     flexDirection: 'row',
     alignSelf: 'flex-start',
     marginTop: 10
@@ -111,12 +107,15 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     fontWeight: '600',
-    fontFamily: 'Helvetica'
+  },
+  unBold: {
+    fontWeight: '300'
   },
   avatarStyle: {
     width: 45,
     height: 45,
-    borderRadius: 20
+    borderRadius: 20,
+    marginLeft: '2%'
   }
 
 });

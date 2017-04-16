@@ -1,33 +1,38 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ListView } from 'react-native';
 
-import { getNotifications } from '../../services/apiActions'
+import { getNotifications, getLikes } from '../../services/apiActions'
 
 import { NotificationList } from './NotificationList'
 
 export class Notifications extends Component {
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      users: ds.cloneWithRows([]),
+      groupRequests: [],
+      likes: []
     };
   }
 
   componentDidMount() {
     getNotifications()
       .then(data => {
-        console.log(data)
-        this.setState({users: this.state.users.cloneWithRows(data.users)})
+        this.setState({groupRequests: data.users})
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
+
+    getLikes()
+      .then(data => {
+        this.setState({likes: data.notifications})
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
-    const { users } = this.state
+    const { groupRequests, likes } = this.state
     return (
       <View style={styles.container}>
-        <NotificationList notifications={users} />
+        <NotificationList groupRequests={groupRequests} likes={likes} />
       </View>
     );
   }

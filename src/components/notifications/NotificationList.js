@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { ScrollView, ListView, View, StyleSheet } from 'react-native';
 import { NotificationDetail } from './NotificationDetail';
+import { LikeNotificationDetail } from './LikeNotificationDetail'
 
 export class NotificationList extends Component {
   constructor(props) {
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
     super(props);
     this.state = {
+      ds: ds.cloneWithRows([])
     };
     this.renderNotifications = this.renderNotifications.bind(this);
   }
@@ -16,14 +20,34 @@ export class NotificationList extends Component {
     );
   }
 
-  render() {
+  renderLikeNotification(like) {
     return (
-      <ListView
-       style={styles.scrollView}
-       dataSource={this.props.notifications}
-       renderRow={this.renderNotifications}
-       renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-      />
+      <LikeNotificationDetail like={like} />
+    )
+  }
+
+  render() {
+    const { groupRequests, likes } = this.props;
+    return (
+      <View>
+        {
+          groupRequests.length > 0 && <ListView
+            style={styles.scrollView}
+            dataSource={this.state.ds.cloneWithRows(groupRequests)}
+            renderRow={this.renderNotifications}
+            renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+            />
+        }
+        {
+          likes.length > 0 && <ListView
+           style={styles.scrollView}
+           dataSource={this.state.ds.cloneWithRows(likes)}
+           renderRow={this.renderLikeNotification}
+           renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+          />
+        }
+
+      </View>
     );
   }
 }
@@ -35,7 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E8E8E',
   },
   scrollView: {
-    flex: 1,
+    height: '40%',
     alignSelf: 'stretch',
   }
 });
