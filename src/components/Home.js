@@ -50,9 +50,16 @@ export class Home extends Component {
           longitudeDelta: 0.00421*1.5
       })
       this.state.region = region;
-      this.globalFilter();
-      this.getPlaces();
     })
+    this.globalFilter();
+    this.getPlaces();
+  }
+
+  componentWillUnmount() {
+     navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  componentWillReceiveProps() {
   }
 
   getPlaces() {
@@ -89,7 +96,9 @@ export class Home extends Component {
     const longitude = this.state.region.longitude._value;
     const queryString = `lat=${latitude}&lng=${longitude}&distance=20&type=${type}`
     getFilterPlaces(queryString)
-    .then(data => this.setState({markers: data}))
+    .then(data => {
+      this.setState({markers: data, selectedFilter: 'feed'})
+    })
     .catch(err => console.log("ERR FILTER", data))
   }
 

@@ -37,7 +37,6 @@ export class Map extends Component {
   }
 
   render() {
-    console.log("RE RENDER", this.props.region)
     const startingPoints = this.props.markers.length > 0 ? this.loadMarkers() : null;
     const {Region, gpsAccuracy} = this.props;
     return (
