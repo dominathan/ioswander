@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ListView } from 'react
 
 import { getPlace } from '../../services/apiActions';
 import { Feed } from '../feed/Feed';
+// import { ImageFeed } from '../feed/ImageFeed';
 import { Map } from '../map/Map';
 import ProfileStats from '../profile/ProfileStats';
 
@@ -85,12 +86,11 @@ export class PlaceProfile extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.feed}>
-               {(feedType === 'feed') && <Feed showButtons={true} feed={feed} />}
-               {(feedType === 'favorites') && <Feed showButtons={false} feed={favorites} />}
-               {(feedType === 'photos') && <ImageFeed feed={photos} />}
-             </View>
+              {(feedType === 'feed') && <Feed showButtons={true} feed={feed} />}
+              {(feedType === 'favorites') && <Feed showButtons={false} feed={favorites} />}
+              // {(feedType === 'photos') && <ImageFeed feed={photos} />}
+            </View>
           </View>
-
         </View>
       </View>
     );
@@ -189,6 +189,6 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
   feed: {
-
+    flex: 1
   }
 });

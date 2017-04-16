@@ -222,6 +222,6 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
   feed: {
-
+    flex: 1
   }
 });
