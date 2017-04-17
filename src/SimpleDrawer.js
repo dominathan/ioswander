@@ -18,6 +18,7 @@ class SimpleDrawer extends Component {
   }
 
   componentDidMount() {
+    Actions.refresh({key: 'drawer', ref: this.refs.navigation})
     this.setCurrentUser();
   }
 
@@ -32,7 +33,7 @@ class SimpleDrawer extends Component {
     const children = state.children;
     return (
       <Drawer
-      ref="navigation"
+       ref="navigation"
        open={state.open}
        onOpen={() => Actions.refresh({ key: state.key, open: true })}
        onClose={() => Actions.refresh({ key: state.key, open: false })}
