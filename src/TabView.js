@@ -3,7 +3,7 @@ import { ListView, StyleSheet, Text, View } from 'react-native';
 import Button from 'react-native-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
-import TabViewHeader from './components/TabViewHeader';
+import {TabViewHeader} from './components/TabViewHeader';
 
 const contextTypes = {
   drawer: React.PropTypes.object,

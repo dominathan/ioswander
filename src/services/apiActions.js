@@ -7,7 +7,7 @@ const headers = (token) => {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'Origin': '',
-    'Authorization': `Bearer ${token.idToken}`
+    'Authorization': `Bearer ${token ? token.idToken : ''}`
   };
 };
 

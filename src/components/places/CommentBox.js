@@ -96,9 +96,10 @@ export class CommentBox extends Component {
     const { favorite, text, photo } = this.state;
     addPlaceToFavorite({ place: place, comment: text, favorite: favorite, group: group, image: photo })
       .then((res) => {
-        place.group ? Actions.groupProfile({group: group}) : Actions.home({type: 'refresh'});
       })
       .catch((error) => console.log('Failed Saving Place: ', error));
+      // NOTE - redirect before photo processes.
+      place.group ? Actions.groupProfile({group: group}) : Actions.home({type: 'refresh'});
   }
 
   render() {
