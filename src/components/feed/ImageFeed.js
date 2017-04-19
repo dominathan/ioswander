@@ -12,6 +12,7 @@ export class ImageFeed extends Component {
   }
 
   componentWillMount() {
+    console.log(this.props)
     this.setState({images: this.state.images.cloneWithRows(this.props.images)});
   }
 

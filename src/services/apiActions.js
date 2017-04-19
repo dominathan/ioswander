@@ -20,8 +20,6 @@ const defaultPost = (subUrl, data) => {
        return
      }
      const parsedToken = JSON.parse(token);
-     console.log("DATA", data)
-     console.log("URL", subUrl)
      fetch(`${API_BASE}/${subUrl}`, {
        method: 'POST',
        headers: headers(parsedToken),
