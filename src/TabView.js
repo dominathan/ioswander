@@ -94,6 +94,11 @@ const TabView = (props, context) => {
       routeCallback: () => { drawer.close(); Actions.settings({type: 'reset'}); },
       name: 'Settings',
       icon: 'cogs'
+    },
+    {
+      routeCallback: () => { drawer.close(); Actions.login({type: 'reset'}); },
+      name: 'Login',
+      icon: 'cogs'
     }
   ]);
   return (
