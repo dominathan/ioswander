@@ -23,6 +23,8 @@ class SimpleDrawer extends Component {
 
   setCurrentUser() {
     AsyncStorage.getItem('user', (err, user) => {
+      console.log("NO USER? DARWER", err)
+      console.log("GETTING USER? DARWER", user)
       this.setState({user: JSON.parse(user)});
     });
   }
@@ -30,6 +32,7 @@ class SimpleDrawer extends Component {
   render() {
     const state = this.props.navigationState;
     const children = state.children;
+    const { user } = this.state.user
     return (
       <Drawer
       ref="navigation"
@@ -37,7 +40,7 @@ class SimpleDrawer extends Component {
        onOpen={() => Actions.refresh({ key: state.key, open: true })}
        onClose={() => Actions.refresh({ key: state.key, open: false })}
        type="displace"
-       content={<TabView user={this.state.user}/>}
+       content={<TabView user={user}/>}
        tapToClose={true}
        openDrawerOffset={0.2}
        panCloseMask={0.2}

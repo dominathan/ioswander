@@ -20,7 +20,8 @@ const TabViewHeader = (props) => {
 
     return (
       <TouchableOpacity onPress={() => goToProfile()}>
-        <View style={viewStyle}>
+        {!props.user && <Text> Go To Profile </Text> }
+        {props.user && <View style={viewStyle}>
             <View style={imageViewStyle}>
                 <Image style={profileImageStyle} source={{ uri: props.user.photo_url }} />
             </View>
@@ -28,7 +29,8 @@ const TabViewHeader = (props) => {
                 <Text style={textStyle}>{props.user.first_name} {props.user.last_name}</Text>
                 <Text style={textStyleEmail}>{props.user.email}</Text>
             </View>
-        </View>
+        </View>}
+
       </TouchableOpacity>
     );
 };

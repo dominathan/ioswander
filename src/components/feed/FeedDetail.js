@@ -63,16 +63,14 @@ export class FeedDetail extends Component {
              <Text style={styles.textComment}>
                {feed.comment}
              </Text>
-             {this.props.showButtons && this.state.user.id !== feed.user.id && <View style={styles.realSubTitle}>
-               <View style={styles.likeAndBeen}>
-                 { !showHeart && <TouchableOpacity onPress={() => this.handleLike(feed)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity> }
-                 { !showBeenThere && <TouchableOpacity onPress={() => this.handleBeenThere(feed)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity> }
-               </View>
-               <View style={styles.icons}>
-                 { showHeart && <Icon name="favorite" color="red" /> }
-                 { showBeenThere && <Icon name="place" color="red"/> }
-               </View>
-             </View>}
+             <View style={styles.likeAndBeen}>
+               { !showHeart && <TouchableOpacity onPress={() => this.handleLike(feed)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity> }
+               { !showBeenThere && <TouchableOpacity onPress={() => this.handleBeenThere(feed)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity> }
+             </View>
+             <View style={styles.icons}>
+               { showHeart && <Icon name="favorite" color="red" /> }
+               { showBeenThere && <Icon name="place" color="red"/> }
+             </View>
            </View>
          }
          hideChevron={true}
