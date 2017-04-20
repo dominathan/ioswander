@@ -5,10 +5,7 @@ import { AsyncStorage, Image, StatusBar, TouchableHighlight, View, StyleSheet, T
 import { Icon, Grid, Col, Row} from 'react-native-elements';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 
-
-
 import { Home } from './components/Home';
-// import { Navbar } from './components/navbar/Navbar.js'
 import SimpleDrawer from './SimpleDrawer';
 
 // Places
