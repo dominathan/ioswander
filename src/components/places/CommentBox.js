@@ -29,7 +29,6 @@ const toDataUrl = (url, callback) => {
 //       reader.readAsDataURL(blob)
 //     }))
 
-// Make a Component
 export class CommentBox extends Component {
   constructor(props) {
     super(props);

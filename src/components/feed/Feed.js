@@ -24,11 +24,13 @@ export class Feed extends Component {
 
   render() {
     return (
-      <ListView
-         dataSource={this.state.feed}
-         renderRow={this.renderFeed}
-         renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-        />
+      <View style={styles.listView}>
+        <ListView
+           dataSource={this.state.feed}
+           renderRow={this.renderFeed}
+           renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+          />
+      </View>
     );
   }
 }
@@ -81,6 +83,9 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 20,
     marginLeft: '2%'
+  },
+  listStyle: {
+    flex: 1
   }
 
 });

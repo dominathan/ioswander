@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import MapView from 'react-native-maps';
 import { Icon } from 'react-native-elements';
 
-import { getPlaces, getFeed, getFriendFeed, getExpertFeed, getFilterPlaces } from '../services/apiActions';
+import { getPlaces, getFeed, getFriendFeed, getExpertFeed, getFilterPlaces, getExpertPlaces, getFriendPlaces } from '../services/apiActions';
 import { Feed } from './feed/Feed';
 import { Map } from './map/Map';
 import { PlaceList } from './places/PlaceList';
@@ -15,8 +15,9 @@ export class Home extends Component {
 
   constructor(props) {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-
     super(props);
+    console.log("PROPS", props)
+
     this.state = {
       markers: [],
       places: ds.cloneWithRows([]),
@@ -51,26 +52,36 @@ export class Home extends Component {
       })
       this.state.region = region;
     })
-    this.globalFilter();
-    this.getPlaces();
+
+    if(this.props.selectedHeader === 'global') {
+      this.getPlaces();
+    } else if (this.props.selectedHeader === 'friends') {
+      this.filterFriends();
+    } else {
+      this.filterExperts();
+    }
+
   }
 
   componentWillUnmount() {
      navigator.geolocation.clearWatch(this.watchID);
   }
 
-  componentWillReceiveProps() {
+  componentWillReceieeProps(nextProps) {
+    console.log("NEXTPROPS?", nextProps)
   }
 
   getPlaces() {
     getPlaces()
       .then((data) => {
+        console.log("MARKERS GET PLACES", data);
         this.setState({
           markers: data,
           places: this.state.places.cloneWithRows(data)
         });
       })
       .catch((err) => console.log('fuck balls: ', err));
+      this.globalFilter();
   }
 
   componentWillUnmount() {
@@ -89,6 +100,15 @@ export class Home extends Component {
     this.setState({
       selectedFilter: val
     });
+  }
+
+  filterPlacesFromFeed(data) {
+    return data.reduce((acc,feed,idx,self) => {
+      if(!acc.some((elem) => elem.id === feed.place.id)) {
+        acc.push(feed.place);
+      }
+      return acc
+    },[])
   }
 
   handleFilter(type) {
@@ -125,6 +145,14 @@ export class Home extends Component {
         });
       })
       .catch((err) => console.error('NOO FEED', err));
+    getFriendPlaces()
+      .then((data) => {
+          this.setState({
+            markers: data,
+            places: this.state.places.cloneWithRows(data)
+          });
+        })
+        .catch((err) => console.log('fuck balls: ', err));
 
   }
 
@@ -138,6 +166,15 @@ export class Home extends Component {
         });
       })
       .catch((err) => console.error('NOO FEED', err));
+
+    getExpertPlaces()
+      .then((data) => {
+          this.setState({
+            markers: data,
+            places: this.state.places.cloneWithRows(data)
+          });
+        })
+        .catch((err) => console.log('fuck balls: ', err));
   }
 
   render() {

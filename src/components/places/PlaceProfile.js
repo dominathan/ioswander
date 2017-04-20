@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ListView } from 'react
 
 import { getPlace } from '../../services/apiActions';
 import { Feed } from '../feed/Feed';
+import { ImageFeed } from '../feed/ImageFeed';
 import { Map } from '../map/Map';
 import ProfileStats from '../profile/ProfileStats';
 
@@ -58,7 +59,7 @@ export class PlaceProfile extends Component {
   }
 
   render() {
-    const { favorites, favoritesList, feed, feedType, markers, place, selectedFilter } = this.state;
+    const { favorites, favoritesList, feed, feedType, markers, place, photos, selectedFilter } = this.state;
     console.log('this state', this.state)
     return (
       <View style={styles.container}>
@@ -67,11 +68,9 @@ export class PlaceProfile extends Component {
           { place && <View style={styles.profileDetailsContainer}>
             <View style={styles.profileTextContainer}>
               <Text style={styles.name}>{place.name}</Text>
+              <ProfileStats style={styles.favorites} label="Favorites" icon="star-o" data={favorites.length} />
             </View>
           </View> }
-          <View style={styles.statsContainer}>
-            <ProfileStats label="Favorites" icon="star-o" data={favorites.length} />
-          </View>
           <View style={styles.listContainer}>
             <View style={styles.filtersContainer}>
               <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('feed')}>
@@ -85,12 +84,11 @@ export class PlaceProfile extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.feed}>
-               {(feedType === 'feed') && <Feed showButtons={true} feed={feed} />}
-               {(feedType === 'favorites') && <Feed showButtons={false} feed={favorites} />}
-               {(feedType === 'photos') && <ImageFeed feed={photos} />}
-             </View>
+              {(feedType === 'feed') && <Feed showButtons={true} feed={feed} />}
+              {(feedType === 'favorites') && <Feed showButtons={false} feed={favorites} />}
+              {(feedType === 'photos') && <ImageFeed images={photos} />}
+            </View>
           </View>
-
         </View>
       </View>
     );
@@ -156,7 +154,8 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     alignSelf: 'flex-start',
-    paddingTop: 15
+    paddingTop: 15,
+    marginRight: '40%'
   },
   profileDetailsContainer: {
     flex: 1,
@@ -167,19 +166,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   profileTextContainer: {
-    flex: 3,
-    marginLeft: 10
-  },
-  photo: {
-    height: 70,
-    width: 70,
-    borderRadius: 35,
-    alignSelf: 'flex-start',
-    position: 'absolute',
-    top: -15,
-    marginLeft: 5,
-    borderWidth: 2,
-    borderColor: '#FFF'
+    flex: 1,
+    height: 45,
+    marginLeft: 10,
+    flexDirection: 'row'
   },
   statsContainer: {
     flex: 1,
@@ -189,6 +179,6 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
   feed: {
-
+    flex: 1
   }
 });
