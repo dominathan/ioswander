@@ -31,7 +31,7 @@ class SimpleDrawer extends Component {
   render() {
     const state = this.props.navigationState;
     const children = state.children;
-    const { user } = this.state.user
+    const user = this.state.user;
     return (
       <Drawer
        ref="navigation"
@@ -44,7 +44,6 @@ class SimpleDrawer extends Component {
        openDrawerOffset={0.2}
        panCloseMask={0.2}
        negotiatePan={true}
-       style={drawerStyles}
        tweenHandler={(ratio) => ({
         main: { opacity: Math.max(0.54, 1 - ratio) }
         })}
@@ -54,10 +53,5 @@ class SimpleDrawer extends Component {
     );
   }
 }
-
-const drawerStyles = {
-  // drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3 },
-  // main: { paddingLeft: 3 },
-};
 
 export default SimpleDrawer;

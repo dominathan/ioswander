@@ -53,8 +53,9 @@ class App extends Component {
     this.renderDrawerButton = this.renderDrawerButton.bind(this);
     this.handleSelectedHeaderChange = this.handleSelectedHeaderChange.bind(this);
     this.handleGlobal = this.handleGlobal.bind(this);
-    this.handleExpert = this.handleExpert.bind(this)
-    this.handleFriends = this.handleFriends.bind(this)
+    this.handleExpert = this.handleExpert.bind(this);
+    this.handleFriends = this.handleFriends.bind(this);
+    this.renderSearchGroupButton = this.renderSearchGroupButton.bind(this);
   }
   renderTitle() {
     const { selectedHeader } = this.state
@@ -127,8 +128,15 @@ class App extends Component {
     )
   }
 
+  renderSearchGroupButton() {
+    return (
+      <TouchableOpacity onPress={() => Actions.searchGroup()}>
+        <Icon name='search' color="#FFF" />
+      </TouchableOpacity>
+    )
+  }
+
   handleSelectedHeaderChange() {
-    console.log("CLICK?")
     Actions.refresh({selectedHeader: this.state.selectedHeader})
   }
 
@@ -137,36 +145,62 @@ class App extends Component {
         return (null);
       } else {
         return (
-          <Router navigationBarStyle={{ backgroundColor: '#3c95cd', justifyContent: 'flex-start', flex: 1 }} titleStyle={{ color: '#FFF' }} barButtonTextStyle={{ color: "#FFF" }} barButtonIconStyle={{ tintColor: 'rgb(255,255,255)' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
-            <Scene key='drawer' component={SimpleDrawer} >
+           <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
+            <Scene key='drawer' renderLeftButton={this.drawerButton} component={SimpleDrawer} >
               <Scene key='main' tabs={false}>
-                <Scene renderLeftButton={this.renderDrawerButton} key="home" component={Home} renderRightButton={this.renderTitle} onRight={() => console.log("ANYHTHIGN")} selectedHeader={this.state.selectedHeader} initial />
+                <Scene key='launch' >
+                  <Scene key='login' component={Login} title="Login" hideNavBar initial />
+                </Scene>
+                <Scene renderLeftButton={this.renderDrawerButton} key="home" component={Home} renderRightButton={this.renderTitle} />
                 <Scene renderLeftButton={this.renderDrawerButton} key="myPlaces" component={MyPlaces} title="Places" />
-                <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
+                <Scene renderLeftButton={this.renderDrawerButton} key="googlePlaces" component={GooglePlaces} title="Add a Place" />
                 <Scene renderLeftButton={this.renderDrawerButton} key="friends" component={Friends} title="Friends" />
                 <Scene renderLeftButton={this.renderDrawerButton} key="notifications" component={Notifications} title="Notifications"  />
                 <Scene renderLeftButton={this.renderDrawerButton} key="settings" component={Settings} title="Settings" />
                 <Scene renderLeftButton={this.renderDrawerButton} key="help" component={Help} title="Help" />
                 <Scene renderLeftButton={this.renderDrawerButton} key="profile" component={Profile} title="Profile" />
-                <Scene key="placeProfile" component={PlaceProfile} title="Place" />
-                <Scene renderLeftButton={this.renderDrawerButton} key="groups" component={Group} title="Groups" onRight={() => Actions.searchGroup()} rightTitle="Search" titleStyle={{ color: "#FFF" }} />
-                <Scene key="createGroup" component={CreateGroup} title="Create a Group" />
-                <Scene key='searchGroup' component={GroupSearch} title="Search for Groups" />
-                <Scene key='groupProfile' component={GroupProfile} title="Group" onRight={(state) => this.handleAddFriends(state)} rightTitle="+ Friend" />
-                <Scene key='addFriends' component={AddFriends} title='Add to Group' />
-                <Scene key='onboarding' component={Onboarding} title='Onboarding' hideNavBar />
-                <Scene key='profileInfo' component={ProfileInfo} title='Profile Info' />
-                <Scene key='imageDetail' component={ImageDetail} title='Image' />
-                <Scene key='login' component={Login} title="Login" hideNavBar />
-
+                <Scene renderLeftButton={this.renderDrawerButton} key="placeProfile" component={PlaceProfile} title="Place" />
+                <Scene renderLeftButton={this.renderDrawerButton} key="groups" component={Group} title="Groups" onRight={() => Actions.searchGroup()} renderRightButton={this.renderSearchGroupButton} rightTitleStyle={{color: '#FFF'}} titleStyle={{ color: "#FFF" }} />
+                <Scene renderLeftButton={this.renderDrawerButton} key="createGroup" component={CreateGroup} title="Create a Group" />
+                <Scene renderLeftButton={this.renderDrawerButton} key='searchGroup' component={GroupSearch} title="Search for Groups" />
+                <Scene renderLeftButton={this.renderDrawerButton} key='groupProfile' component={GroupProfile} title="Group" onRight={(state) => this.handleAddFriends(state)} rightTitle="+ Friend" />
+                <Scene renderLeftButton={this.renderDrawerButton} key='addFriends' component={AddFriends} title='Add to Group' />
+                <Scene renderLeftButton={this.renderDrawerButton} key='onboarding' component={Onboarding} title='Onboarding' hideNavBar />
+                <Scene renderLeftButton={this.renderDrawerButton}  key='profileInfo' component={ProfileInfo} title='Profile Info' />
               </Scene>
             </Scene>
           </Router>
+
         );
       }
   }
-
 }
+
+  // <Router navigationBarStyle={{ backgroundColor: '#3c95cd', justifyContent: 'flex-start', flex: 1 }} titleStyle={{ color: '#FFF' }} barButtonTextStyle={{ color: "#FFF" }} barButtonIconStyle={{ tintColor: 'rgb(255,255,255)' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
+  //   <Scene key='drawer' component={SimpleDrawer} >
+  //     <Scene key='main' tabs={false}>
+  //       <Scene renderLeftButton={this.renderDrawerButton} key="home" component={Home} renderRightButton={this.renderTitle} onRight={() => console.log("ANYHTHIGN")} selectedHeader={this.state.selectedHeader} initial />
+  //       <Scene renderLeftButton={this.renderDrawerButton} key="myPlaces" component={MyPlaces} title="Places" />
+  //       <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
+  //       <Scene renderLeftButton={this.renderDrawerButton} key="friends" component={Friends} title="Friends" />
+  //       <Scene renderLeftButton={this.renderDrawerButton} key="notifications" component={Notifications} title="Notifications"  />
+  //       <Scene renderLeftButton={this.renderDrawerButton} key="settings" component={Settings} title="Settings" />
+  //       <Scene renderLeftButton={this.renderDrawerButton} key="help" component={Help} title="Help" />
+  //       <Scene renderLeftButton={this.renderDrawerButton} key="profile" component={Profile} title="Profile" />
+  //       <Scene key="placeProfile" component={PlaceProfile} title="Place" />
+  //       <Scene renderLeftButton={this.renderDrawerButton} key="groups" component={Group} title="Groups" onRight={() => Actions.searchGroup()} rightTitle="Search" titleStyle={{ color: "#FFF" }} />
+  //       <Scene key="createGroup" component={CreateGroup} title="Create a Group" />
+  //       <Scene key='searchGroup' component={GroupSearch} title="Search for Groups" />
+  //       <Scene key='groupProfile' component={GroupProfile} title="Group" onRight={(state) => this.handleAddFriends(state)} rightTitle="+ Friend" />
+  //       <Scene key='addFriends' component={AddFriends} title='Add to Group' />
+  //       <Scene key='onboarding' component={Onboarding} title='Onboarding' hideNavBar />
+  //       <Scene key='profileInfo' component={ProfileInfo} title='Profile Info' />
+  //       <Scene key='imageDetail' component={ImageDetail} title='Image' />
+  //       <Scene key='login' component={Login} title="Login" hideNavBar />
+  //
+  //     </Scene>
+  //   </Scene>
+  // </Router>
 
 const styles = StyleSheet.create({
   titleGroupStyle: {

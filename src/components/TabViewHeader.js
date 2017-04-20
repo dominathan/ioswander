@@ -17,17 +17,17 @@ const TabViewHeader = (props) => {
       props.drawer.close();
       Actions.profile({ person: props.user, type: 'reset' });
     };
-
+    const user = props.user.user
     return (
       <TouchableOpacity onPress={() => goToProfile()}>
-        {!props.user && <Text> Go To Profile </Text> }
-        {props.user && <View style={viewStyle}>
+        {!user && <Text> Go To Profile </Text> }
+        {user && <View style={viewStyle}>
             <View style={imageViewStyle}>
-                <Image style={profileImageStyle} source={{ uri: props.user.photo_url }} />
+                <Image style={profileImageStyle} source={{ uri: user.photo_url }} />
             </View>
             <View style={textViewStyle}>
-                <Text style={textStyle}>{props.user.first_name} {props.user.last_name}</Text>
-                <Text style={textStyleEmail}>{props.user.email}</Text>
+                <Text style={textStyle}>{user.first_name} {user.last_name}</Text>
+                <Text style={textStyleEmail}>{user.email}</Text>
             </View>
         </View>}
 
