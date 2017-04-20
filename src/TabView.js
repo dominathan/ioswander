@@ -97,7 +97,6 @@ const TabView = (props, context) => {
     }
   ]);
 
-  console.log("WE GET USER? IN TABVIEW?", props.user)
   return (
     <View style={[styles.container, props.sceneStyle]}>
       <TabViewHeader user={props.user} drawer={drawer} />
